@@ -1,0 +1,66 @@
+Prompt:
+which folder I'm in
+
+Result:
+You are in the c:\Users\dipradha\Documents\MF_Order_Processing_System\db2 folder.
+
+---
+
+Prompt:
+KSDS = Customer Master File
+Field Name Data Type Remarks
+Customer Code 9(07) Primary Key
+Customer Name X(15)
+Customer Add X(12)
+Customer Region X(03) ( MUM - Mumbai , DEL - Delhi, 
+BNG - Banglore, CHE - Chennai, 
+HYD- Hyderabad )
+Customer Contact No X(10)
+Customer Email X(40)
+2. KSDS = Order Transaction File
+Field Name Data Type Remarks
+Order code 9(07) Primary key
+Customer Code 9(07)
+Item Code 9(07)
+Item Qty 9(05)
+Order Date X(08)
+3. KSDS = Item Master File
+Field Name Data Type Remarks
+Item Code 9(07) Primary Key
+Item Name X(12)
+Item Qty 9(05)
+Item Price 9(05)V9(02)
+
+this is the structure of the tables.
+create file for initialization of these tables, one file for putting 10 dummy records for each, and other file to run these files, if needed
+create those , use proper naming convention, use 2 to4 words only not more than that 
+
+Result:
+Provided SQL files for initializing the tables, inserting 10 dummy records for each table, and running the scripts using proper naming conventions.
+
+---
+
+Prompt:
+in dummy give full code
+and to run use jcl file
+and in each file insert one-liner comment to tell what the code will do
+
+Result:
+Updated the insert_dummy_records.sql file with full dummy records and added one-liner comments. Created a JCL file to run the SQL scripts.
+
+---
+
+Prompt:
+in this folder create a file prompt_db2.txt
+and provide what prompt I gave and what result I got.
+
+Result:
+Created a file named prompt_db2.txt in the folder and recorded the prompt and result.
+
+---
+
+Prompt:
+give our whole conversation in that prompt file
+
+Result:
+Updated the prompt_db2.txt file to include the entire conversation.
