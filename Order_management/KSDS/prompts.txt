@@ -1,0 +1,23 @@
+KSDS = Customer Master File
+Field Name Data Type Remarks
+Customer Code 9(07) Primary Key
+Customer Name X(15)
+Customer Add X(12)
+Customer Region X(03) ( MUM - Mumbai , DEL - Delhi,
+BNG - Banglore, CHE - Chennai,
+HYD- Hyderabad )
+Customer Contact No X(10)
+Customer Email X(40)
+create this KSDS file , and provide me how you created
+if needed include jcl part also, give whole thing, don't skip
+I want it to run directly,first create a folder named
+"Order_management",create separate folder named "KSDS" to
+store thisthen again in that folder create
+Customer_Master_KSDS" and store them,use proper naming
+convention ( 2 to 4 words) and use accordingly
+
+
+Insert a one-liner comment explaining the purpose of the
+program.
+
+create another jcl to load 20 records to the KSDS file 
