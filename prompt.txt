@@ -1,6 +1,59 @@
-// filepath: 
+(For creating Cobol and CICS files for MENU)
+----------------------------------------------
+create cobol and cics map and mapset as required for the below requirements
+Menu Screen program
+Processing Rules 
+1. When the Menu Transaction is executed, the above Screen will be displayed
+2. On PF3, the Program will give Control back to CICS with a suitable Message
+3. The User needs to position the Cursor on the Functionality that needs to be invoked. On 
+pressing ENTER, the Program will Transfer Control to the respective Program – Inquiry, Detail 
+ ABC GROUP OF INDIA
+Maintenance or Transaction Insert
+4. All other PF Keys are Invalid
+Here's a breakdown of the screen elements and their functions:
 
-Prompt:
+Header Section:
+
+DATE: DD-MMM-YYYY: This field displays the current date in the format "DD-MMM-YYYY".
+TIME: HH:MM:SS: This field displays the current time in the format "HH:MM:SS".
+Title Section:
+
+ABC GROUP OF INDIA: This is the title of the screen, indicating the organization.
+ORDER MANAGEMENT SYSTEM: This subtitle specifies the system being used.
+Menu Options Section:
+
+ITEM INQUIRY PROGRAM: This option allows the user to inquire about items.
+CUSTOMER DETAILS UPDATE PROGRAM: This option allows the user to update customer details.
+ORDER UPDATE PROGRAM: This option allows the user to update orders.
+(POSITION CURSOR ON REQUIRED LINE TO EXECUTE PROGRAM): This instruction tells the user to position the cursor on the desired menu option and press ENTER to execute the corresponding program.
+Footer Section:
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX: Placeholder for additional information or instructions.
+ENTER = TO PROCESS: This instruction tells the user to press ENTER to process the selected menu option.
+PF3 = TO EXIT: This instruction tells the user to press PF3 to exit the menu and return control to CICS with a suitable message.
+
+Menu scrren layout given below
+DATE: DD-MMM-YYYY                                      TIME: HH:MM:SS
+
+               ABC GROUP OF INDIA
+            ORDER MANAGEMENT SYSTEM
+
+               ITEM INQUIRY PROGRAM
+
+        CUSTOMER DETAILS UPDATE PROGRAM
+
+               ORDER UPDATE PROGRAM
+(POSITION CURSOR ON REQUIRED LINE TO EXECUTE PROGRAM)
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+ENTER = TO PROCESS                                      PF3 = TO EXIT
+
+modify as if using 3270 terminal
+insert one-liner comment in each program for better understanding
+
+
+(For creating Cobol and CICS files for INQUIRY)
+-------------------------------------------------
 (I have attached the ksds folder, there all ksds files are there, the structure, name etc. so use properly to sync everything)
 
 create cobol and cics map, mapset etc. to fulfill below requirements
@@ -62,33 +115,166 @@ DATE: DD-MMM-YYYY                                      TIME: HH:MM:SS
  XXXXXXXX       XXXXXXXXXXXXXXX    ZZ,ZZ9
 
  PF3 = EXIT     PF5 = FIRST     PF6 = LAST     PF7 = PREV     PF8 = NEXT
+insert one-liner comment at the begining specifying the purpose of the program
+comment shortly in program for better understanding
 
-Result:
-Provided the COBOL and CICS map code for the INQUIRY program.
+(For creating Cobol and CICS files for DETAILS UPDATE)
+-------------------------------------------------------
+(I have added all the context, ksds folder-where required ksds files are there and other files also)
+create cobol and cics map , mapset etc. to fulfill below requirements
+(make sure to sync according to the ksds file given)
+DETAILS UPDATE Program
+Header Section:
+DATE: DD-MMM-YYYY: This field displays the current date in the format "DD-MMM-YYYY".
+TIME: HH:MM:SS: This field displays the current time in the format "HH:MM:SS".
+ABC GROUP OF INDIA: This is the title of the organization.
+Main Section:
+CUSTOMER DETAILS UPDATE PROGRAM: This subtitle specifies the program being used.
+CUST NO : XXXXXXXXXX: This field is for entering the customer number.
+NAME : XXXXXXXXXX: This field is for entering the customer's name.
+ADDRESS : XXXXXXXXXX: This field is for entering the customer's address.
+REGION : XXX: This field is for entering the customer's region.
+CONTACT NO : XXXXXXXXXX: This field is for entering the customer's contact number.
+EMAIL : XXXXXXXXXX: This field is for entering the customer's email address.
+Footer Section:
+ENTER = PROCESS: This function key allows the user to process the entered customer number and display the details if the number exists.
+PF3 = EXIT: This function key allows the user to exit the program and return control to the Menu Program.
+PF4 = ADD: This function key allows the user to add a new customer record after validating the details.
+PF5 = UPDATE: This function key allows the user to update an existing customer record after validating the details.
+PF6 = DELETE: This function key allows the user to delete an existing customer record.
+Processing Rules
+	1. This Program is invoked from the Menu Program
+	2. On ENTER, Program will take the Cust No and Display the Details if Number exists
+	3. On PF3 , control will go back to the Menu Program
+	4. On PF4, Program will validate the Details entered as given in Point 8
+a. Customer code should be numeric
+b. Customer Code should not exist in Customer Master File
+c. If found valid, Insert new Record in Customer Master & Display suitable Message
+d. Else will Display a suitable Error Message with Cursor positioning
+	5. On PF5, Program will validate the Details entered as given in Point 8
+a. Customer code should be numeric and should exist in Customer Master File
+b. If found valid, Update the Record in Customer Master & Display suitable Message
+c. Else will Display a suitable Error Message with Cursor positioning
+	6. On PF6, Program will Delete the Record in Customer Master File if it exists
+	7. All other PF Keys are Invalid
+	8. Fields will be validated as follows –
+a. Customer code should be numeric
+b. Customer Name should not be Blank
+c. Customer Add should not be Blank
+d. Customer region should not be Blank. Valid regions are : ( MUM - Mumbai , DEL - Delhi,
+BNG - Bangalore, CHE - Chennai, HYD- Hyderabad )
+e. Contact No should be Numeric & of 10 Digits
+f. Email should Valid & contain one ‘@’ sign only
+below is the layout
+DATE: DD-MMM-YYYY TIME: HH:MM:SS
+           ABC GROUP OF INDIA
 
----
+           CUSTOMER DETAILS UPDATE PROGRAM
+CUST NO : XXXXXXXXXX
+NAME : XXXXXXXXXX
+ADDRESS : XXXXXXXXXX
+REGION : XXX
+CONTACT NO : XXXXXXXXXX
+EMAIL : XXXXXXXXXX
+ENTER = PROCESS PF3 = EXIT PF4 = ADD PF5 = UPDATE PF6 = DELETE
+insert one-liner comment to specify the purpose of the program
+use short comments for better understanding of code.
 
+(For creating Cobol and CICS files for ORDER UPDATE Program)
+-------------------------------------------------------------
+(I have attached the ksds folder, there all ksds files are there, the structure, name etc. so use properly to sync everything)
+create cobol and cics map, mapset etc. to fulfill below requirements
+ORDER UPDATE Program
+Processing Rules
+	1. This Program is invoked from the Menu Program
+	2. On PF3 , control will go back to the Menu Program
+	3. On ENTER, Program will do the following Validations given in Point 5
+a. If found valid,
+i. Insert new Record in the KSDS, order num should be generated and order date
+should be updated as current date. Display suitable Message
+b. Else will Display a suitable Error Message with Cursor positioning
+	4. All other PF Keys are Invalid
+	5. Fields will be validated as follows –
+a. Payment Type should be = (COD - cash on delivery, NET - net banking )
+b. Item Code should be existing in the Item Master File
+c. Customer Code should be existing in the Customer Master File
+d. Item Qty should be < Stock Qty
+Header Section:
+DATE: DD-MMM-YYYY: This field displays the current date in the format "DD-MMM-YYYY".
+TIME: HH:MM:SS: This field displays the current time in the format "HH:MM:SS".
+ABC GROUP OF INDIA: This is the title of the organization.
+Main Section:
+ORDER UPDATE PROGRAM: This subtitle specifies the program being used.
+PAYMENT TYPE : XXX: This field is for entering the payment type.
+ITEM CODE : XXXXXXXX: This field is for entering the item code.
+CUST CODE : XXXXXXX: This field is for entering the customer code.
+ITEM QTY : 99999: This field is for entering the item quantity.
+Footer Section:
+ENTER = TO PROCESS: This function key allows the user to process the order update based on the entered details.
+PF3 = TO EXIT: This function key allows the user to exit the program and return control to the Menu Program.
+the layout is given below
+DATE: DD-MMM-YYYY TIME: HH:MM:SS
+           ABC GROUP OF INDIA
+
+           ORDER UPDATE PROGRAM
+PAYMENT TYPE : XXX
+ITEM CODE : XXXXXXXX
+CUST CODE : XXXXXXX
+ITEM QTY : 99999
+ENTER = TO PROCESS PF3 = TO EXIT
+insert one-liner comment at the begining specifying the purpose of the program
+comment shortly in program for better understanding
+
+(For creating DB2 files)
+-------------------------
+KSDS = Customer Master File
+Field Name Data Type Remarks
+Customer Code 9(07) Primary Key
+Customer Name X(15)
+Customer Add X(12)
+Customer Region X(03) ( MUM - Mumbai , DEL - Delhi, 
+BNG - Banglore, CHE - Chennai, 
+HYD- Hyderabad )
+Customer Contact No X(10)
+Customer Email X(40)
+2. KSDS = Order Transaction File
+Field Name Data Type Remarks
+Order code 9(07) Primary key
+Customer Code 9(07)
+Item Code 9(07)
+Item Qty 9(05)
+Order Date X(08)
+3. KSDS = Item Master File
+Field Name Data Type Remarks
+Item Code 9(07) Primary Key
+Item Name X(12)
+Item Qty 9(05)
+Item Price 9(05)V9(02)
+
+this is the structure of the tables.
+create file for initialization of these tables, one file for putting 10 dummy records for each, and other file to run these files, if needed
+create those , use proper naming convention, use 2 to 4 words only not more than that.
+In dummy give full code
+and to run use jcl file
+and in each file insert one-liner comment to tell what the code will do(purpose).
+
+
+Prompts for documentation and control flow etc.
+-------------------------------------------------
 Prompt:
-insert a one-liner comment specifying what the program will do
 
-and short comment in the code for better understanding
+Give project details
+first give HLD and LLD
+put db2 part at last and mention (optional for VSAM)
+give the control flow of the project (all programs sequentially as per the flow)
+explain the project (with step by step for clear understanding)
+make a flow chart if possible
+align it in a way that it should be a proper document , we can use to show case the project in an easy and understandable format.
+give the structure of the folder
+Take your time and create the above in a new file.
 
-Result:
-Added one-liner comments specifying the purpose of the programs and short comments for better understanding in the MENU.CBL and INQUIRY.BMS files.
 
----
 
-Prompt:
-keep our conversation of this whole chat in prompt.txt
-append there
 
-Result:
-Appended the entire conversation to the prompt.txt file.
 
----
 
-Prompt:
-create a text file and store our whole conversation
-
-Result:
-Stored the entire conversation in the `prompt.txt` file.
