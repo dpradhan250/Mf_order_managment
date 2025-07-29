@@ -1,4 +1,5 @@
 KSDS = Customer Master File
+----------------------------------
 Field Name Data Type Remarks
 Customer Code 9(07) Primary Key
 Customer Name X(15)
@@ -21,3 +22,21 @@ Insert a one-liner comment explaining the purpose of the
 program.
 
 create another jcl to load 20 records to the KSDS file 
+---------------------------------------------------------------------
+(for creating KSDS files)
+create same for these 2
+KSDS = Order Transaction File
+Field Name Data Type Remarks
+Order code 9(07) Primary key
+Customer Code 9(07)
+Item Code 9(07)
+Item Qty 9(05)
+Order Date X(08)
+3. KSDS = Item Master File
+Field Name Data Type Remarks
+Item Code 9(07) Primary Key
+Item Name X(12)
+Item Qty 9(05)
+Item Price 9(05)V9(02)
+
+
