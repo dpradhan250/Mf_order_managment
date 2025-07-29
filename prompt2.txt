@@ -1,4 +1,171 @@
 Basic Practice
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+COBOL/CICS Order Management System Project Prompts
+==================================================
+
+Phase 1: Project Setup and Structure
+------------------------------------
+1. Create a COBOL/CICS order management system project structure with the following folders:
+   - Order_management/ (main application folder)
+   - Order_management/KSDS/ (for VSAM KSDS files)
+   - Order_management/db2/ (for DB2 scripts)
+   - Order_management/KSDS/Customer_Master_KSDS/
+   - Order_management/KSDS/Item_Master_KSDS/
+   - Order_management/KSDS/Order_Transaction_KSDS/
+   Also create a README.md file explaining the project overview and structure.
+
+Phase 2: Database Design
+------------------------
+2. Create DB2 table initialization scripts for a mainframe order management system with these tables:
+   - CustomerMaster (CustomerCode CHAR(7) PK, CustomerName CHAR(15), CustomerAdd CHAR(12), CustomerRegion CHAR(3), CustomerContactNo CHAR(10), CustomerEmail CHAR(40))
+   - OrderTransaction (OrderCode CHAR(7) PK, CustomerCode CHAR(7), ItemCode CHAR(7), ItemQty INT, OrderDate CHAR(8))
+   - ItemMaster (ItemCode CHAR(7) PK, ItemName CHAR(12), ItemQty INT, ItemPrice DECIMAL(7,2))
+   Save as initialize_tables.sql with proper foreign key relationships.
+
+3. Create SQL script to insert 10 dummy records for each table (CustomerMaster, OrderTransaction, ItemMaster) with realistic data. CustomerRegion should use values: MUM, DEL, BNG, CHE, HYD. Save as insert_dummy_records.sql.
+
+4. Create a JCL script named run_scripts.jcl that executes the initialize_tables.sql and insert_dummy_records.sql scripts using DB2 utilities.
+
+Phase 3: VSAM KSDS File Definitions
+-----------------------------------
+5. Create JCL script to define a VSAM KSDS cluster for Customer Master with:
+   - Name: Customer.Master.KSDS
+   - Record size: 87 bytes
+   - Key: 7 bytes starting at position 0
+   Save as CreateKSDS.jcl in Customer_Master_KSDS folder
+
+6. Create JCL script to load 20 sample customer records into Customer.Master.KSDS file. Save as LoadKSDSRecords.jcl in Customer_Master_KSDS folder.
+
+7. Create JCL script to define VSAM KSDS cluster for Item Master with:
+   - Name: Item.Master.KSDS
+   - Record size: 26 bytes
+   - Key: 7 bytes starting at position 0
+   Save as CreateItemMasterKSDS.jcl in Item_Master_KSDS folder
+
+8. Create JCL script to load 10 sample item records into Item.Master.KSDS file. Save as LoadItemMasterRecords.jcl in Item_Master_KSDS folder.
+
+9. Create JCL script to define VSAM KSDS cluster for Order Transaction with:
+   - Name: Order.Transaction.KSDS
+   - Record size: 41 bytes
+   - Key: 7 bytes starting at position 0
+   Save as CreateOrderTransactionKSDS.jcl in Order_Transaction_KSDS folder
+
+10. Create JCL script to load 10 sample order transaction records into Order.Transaction.KSDS file. Save as LoadOrderTransactionRecords.jcl in Order_Transaction_KSDS folder.
+
+Phase 4: COBOL File Structure Programs
+--------------------------------------
+11. Create a COBOL program CustomerMaster.cob that defines the file structure for Customer Master KSDS with:
+    - Customer-Code PIC 9(07)
+    - Customer-Name PIC X(15)
+    - Customer-Add PIC X(12)
+    - Customer-Region PIC X(03)
+    - Customer-Contact-No PIC X(10)
+    - Customer-Email PIC X(40)
+    Include proper VSAM file handling.
+
+12. Create a COBOL program ItemMaster.cob that defines the file structure for Item Master KSDS with:
+    - Item-Code PIC 9(07)
+    - Item-Name PIC X(12)
+    - Item-Qty PIC 9(05)
+    - Item-Price PIC 9(05)V9(02)
+    Include proper VSAM file handling.
+
+13. Create a COBOL program OrderTransaction.cob that defines the file structure for Order Transaction KSDS with:
+    - Order-Code PIC 9(07)
+    - Customer-Code PIC 9(07)
+    - Item-Code PIC 9(07)
+    - Item-Qty PIC 9(05)
+    - Order-Date PIC X(08)
+    Include proper VSAM file handling.
+
+Phase 5: CICS BMS Maps
+----------------------
+14. Create a CICS BMS mapset MENU.BMS for the main menu screen with:
+    - Header showing DATE and TIME fields
+    - Title "ABC GROUP OF INDIA" and "ORDER MANAGEMENT SYSTEM"
+    - Three selectable options: "ITEM INQUIRY PROGRAM", "CUSTOMER DETAILS UPDATE PROGRAM", "ORDER UPDATE PROGRAM"
+    - Footer with "ENTER = TO PROCESS" and "PF3 = TO EXIT"
+    - Cursor positioning instructions
+
+15. Create a CICS BMS mapset INQUIRY.BMS for item inquiry screen with:
+    - Header showing DATE and TIME
+    - Title section with "INQUIRY Program", "ABC GROUP OF INDIA", "ITEM INQUIRY PROGRAM"
+    - Table headers: ITEM#, ITEM NAME, ITEM QTY
+    - 10 rows for item data display
+    - Footer with PF3=EXIT, PF5=FIRST, PF6=LAST, PF7=PREV, PF8=NEXT
+
+16. Create a CICS BMS mapset DETAILS.BMS for customer details screen with:
+    - Header showing DATE and TIME
+    - Title "ABC GROUP OF INDIA" and "CUSTOMER DETAILS UPDATE PROGRAM"
+    - Input fields: CUST NO, NAME, ADDRESS, REGION, CONTACT NO, EMAIL
+    - Footer with ENTER=PROCESS, PF3=EXIT, PF4=ADD, PF5=UPDATE, PF6=DELETE
+
+17. Create a CICS BMS mapset ORDERUPD.BMS for order update screen with:
+    - Header showing DATE and TIME
+    - Title "ABC GROUP OF INDIA" and "ORDER UPDATE PROGRAM"
+    - Input fields: PAYMENT TYPE, ITEM CODE, CUST CODE, ITEM QTY
+    - Footer with ENTER=TO PROCESS, PF3=TO EXIT
+
+Phase 6: COBOL Application Programs
+-----------------------------------
+18. Create a COBOL/CICS program MENU.CBL that:
+    - Displays the main menu using MENU.BMS mapset
+    - Processes user input via cursor positioning
+    - Links to INQUIRY, DETAILS, or ORDERUPD programs based on selection
+    - Handles PF3 to exit to CICS
+    - Includes error handling for invalid selections
+
+19. Create a COBOL/CICS program INQUIRY.cob that:
+    - Displays item details from Item Master KSDS in paginated format (10 records per page)
+    - Uses INQUIRY.BMS mapset
+    - Handles PF keys: PF3=exit to menu, PF5=first 10, PF6=last 10, PF7=previous 10, PF8=next 10
+    - Reads from Item.Master.KSDS file
+    - Includes proper error handling
+
+20. Create a COBOL/CICS program DETAILS.cob that:
+    - Manages customer details using DETAILS.BMS mapset
+    - Handles ENTER to display customer details by customer number
+    - Handles PF4 to add new customer, PF5 to update, PF6 to delete
+    - Performs CRUD operations on Customer.Master.KSDS
+    - Includes validation and error handling
+    - PF3 returns to menu
+
+21. Create a COBOL/CICS program ORDERUPD.cob that:
+    - Handles order creation using ORDERUPD.BMS mapset
+    - Validates payment type (COD or NET only)
+    - Validates item code against Item Master KSDS
+    - Validates customer code against Customer Master KSDS
+    - Checks item quantity availability
+    - Creates new order record in Order Transaction KSDS
+    - Includes comprehensive error handling and user feedback
+    - PF3 returns to menu
+
+Phase 7: Configuration and Documentation
+----------------------------------------
+22. Create a zapp.yaml configuration file for IBM Z Open Editor with proper search locations for the COBOL order management system project.
+
+23. Create comprehensive documentation in README.md that explains:
+    - Project overview and structure
+    - How each program works and runs
+    - Control flow between programs
+    - Database schema and KSDS file structures
+    - Step-by-step instructions to set up and run the system
+    - Key features and future enhancements
+
+24. Create a project summary file that documents all the prompts used and results achieved during the development of this COBOL/CICS order management system. Include conversation history for reference.
+
+Phase 8: Testing and Validation
+-------------------------------
+25. Create test scenarios and validation steps for the order management system including:
+    - Menu navigation testing
+    - Item inquiry pagination testing
+    - Customer CRUD operations testing
+    - Order creation with various validation scenarios
+    - KSDS file integrity testing
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 Prompt:
 insert one-liner comment at the beginning specifying the purpose of the program
 
