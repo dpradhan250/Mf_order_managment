@@ -174,3 +174,98 @@ all conversation in prompt2.txt
 
 Result:
 Updated the prompt2.txt file to include the entire conversation from the specified point onward.
+-------------------------------------------------
+// filepath: 
+
+Prompt:
+(I have attached the ksds folder, there all ksds files are there, the structure, name etc. so use properly to sync everything)
+
+create cobol and cics map, mapset etc. to fulfill below requirements
+INQUIRY Program
+Header Section:
+
+DATE: DD-MMM-YYYY: This field displays the current date in the format "DD-MMM-YYYY".
+TIME: HH:MM:SS: This field displays the current time in the format "HH:MM:SS".
+Title Section:
+
+INQUIRY Program = Layout is given below.: This is the title of the screen, indicating the purpose of the program.
+ABC GROUP OF INDIA: This is the title of the organization.
+ITEM INQUIRY PROGRAM: This subtitle specifies the program being used.
+Table Section:
+
+ITEM#: This column displays the item number.
+ITEM NAME: This column displays the name of the item.
+ITEM QTY: This column displays the quantity of the item.
+The rows under these headers contain placeholders represented by X's and Z's:
+ITEM#: XXXXXXXX: Placeholder for the item number.
+ITEM NAME: XXXXXXXXXXXXXXX: Placeholder for the item name.
+ITEM QTY: ZZ,ZZ9: Placeholder for the item quantity.
+Footer Section:
+
+PF3 = EXIT: This function key allows the user to exit the program and return control to the Menu Program.
+PF5 = FIRST: This function key allows the user to display the first 10 records from the Item Master File.
+PF6 = LAST: This function key allows the user to display the last 10 records from the Item Master File.
+PF7 = PREV: This function key allows the user to display the previous 10 records from the Item Master File.
+PF8 = NEXT: This function key allows the user to display the next 10 records from the Item Master File.
+
+Processing Rules 
+1. This Program is invoked from the Menu Program
+2. The Program will Display details of the first 10 Records from the Item Master File. 
+3. On PF3, control will go back to the Menu Program
+4. On PF5, Program will Display the First 10 Records
+5. On PF6, Program will Display the Last 10 Records
+6. On PF7, Program will Display the Previous 10 Records
+7. On PF8, Program will Display the Next 10 Records
+8. All other PF Keys are Invalid
+
+below is the layout
+DATE: DD-MMM-YYYY                                      TIME: HH:MM:SS
+
+               INQUIRY Program = Layout is given below.
+
+               ABC GROUP OF INDIA
+               ITEM INQUIRY PROGRAM
+
+ ITEM#          ITEM NAME          ITEM QTY
+ XXXXXXXX       XXXXXXXXXXXXXXX    ZZ,ZZ9
+ XXXXXXXX       XXXXXXXXXXXXXXX    ZZ,ZZ9
+ XXXXXXXX       XXXXXXXXXXXXXXX    ZZ,ZZ9
+ XXXXXXXX       XXXXXXXXXXXXXXX    ZZ,ZZ9
+ XXXXXXXX       XXXXXXXXXXXXXXX    ZZ,ZZ9
+ XXXXXXXX       XXXXXXXXXXXXXXX    ZZ,ZZ9
+ XXXXXXXX       XXXXXXXXXXXXXXX    ZZ,ZZ9
+ XXXXXXXX       XXXXXXXXXXXXXXX    ZZ,ZZ9
+ XXXXXXXX       XXXXXXXXXXXXXXX    ZZ,ZZ9
+ XXXXXXXX       XXXXXXXXXXXXXXX    ZZ,ZZ9
+
+ PF3 = EXIT     PF5 = FIRST     PF6 = LAST     PF7 = PREV     PF8 = NEXT
+
+Result:
+Provided the COBOL and CICS map code for the INQUIRY program.
+
+---
+
+Prompt:
+insert a one-liner comment specifying what the program will do
+
+and short comment in the code for better understanding
+
+Result:
+Added one-liner comments specifying the purpose of the programs and short comments for better understanding in the MENU.CBL and INQUIRY.BMS files.
+
+---
+
+Prompt:
+keep our conversation of this whole chat in prompt.txt
+append there
+
+Result:
+Appended the entire conversation to the prompt.txt file.
+
+---
+
+Prompt:
+create a text file and store our whole conversation
+
+Result:
+Stored the entire conversation in the `prompt.txt` file.
